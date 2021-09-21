@@ -15,14 +15,27 @@ import java.awt.*;
  * @author ldumay
  */
 public class Horloge extends JFrame{
+    
+    int tailleDeLaPolice = 30;
+    JButton plusButton = new JButton("+");
+    JButton moinsButton = new JButton("-");
+    Font police = new Font("Verdana", Font.PLAIN, tailleDeLaPolice);
+    HorlogeLabel clock = new HorlogeLabel();
 
     public Horloge() {
         super("Horloge");
         setSize(300, 100);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        HorlogeLabel clock = new HorlogeLabel();
-        getContentPane( ).add(clock, BorderLayout.CENTER);
+        
+        JPanel panelTop = new JPanel();
+        getContentPane().add(clock, BorderLayout.EAST);
+        
+        JPanel panelContent = new JPanel();
+        panelContent.add(moinsButton);
+        panelContent.add(plusButton);
+        getContentPane().add(panelContent, BorderLayout.WEST);
+        
+        iniButtons();
     }
     
     class HorlogeLabel extends JLabel implements ActionListener{
@@ -31,7 +44,7 @@ public class Horloge extends JFrame{
             super("" + Calendar.getInstance());
             Timer t = new Timer(1000, this);
             t.start( );
-            setFont(new Font("Verdana", Font.PLAIN, 30));
+            setFont(new Font("Verdana", Font.PLAIN, tailleDeLaPolice));
         }
  
         @Override
@@ -40,4 +53,14 @@ public class Horloge extends JFrame{
         }
     }
     
+   public void iniButtons(){
+       plusButton.addActionListener(event -> {
+           tailleDeLaPolice++;
+           clock.setFont(police);
+       });
+       moinsButton.addActionListener(event -> {
+            tailleDeLaPolice--;
+            clock.setFont(police);
+       });
+   }
 }
